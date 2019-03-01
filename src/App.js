@@ -10,12 +10,19 @@ class App extends Component {
 
   onTextChange=(e)=>{
     this.setState({task:e.target.value})
-  }
-  toggle=(e)=>{
-    let toggle = e.target.value
 
   }
- 
+
+  isChecked=(toggle)=>{
+    if(toggle)
+    
+    return toggle
+  }
+  onSubmit=(e)=>{
+    this.props.addList(this.state.task)
+    this.setState({task:e.target.value = ""})
+
+  }
   render() {
     return (
       <> <div class="ui form success">
@@ -23,20 +30,21 @@ class App extends Component {
           <label>Task Manager Application</label>
           <input  onChange={this.onTextChange} value={this.state.task}/>
         </div>
-        <button class="ui submit button" onClick={()=>this.props.addList(this.state.task)}>Add</button>
+        <button class="ui submit button" onClick={this.onSubmit}>Add</button>
       </div> 
 
-      <div class="ui checked checkbox">
-            {this.props.lists.map(m=><><input type="checkbox"  checked="" onChange={this.toggle}  />
-            <label>{m}</label></>)}
-            
-        </div>
+      
+          {this.props.lists.map(m=><>
+          <div className = "checkbox">
+            <div class="ui checked checkbox">
+          <input type="checkbox"  checked={this.isChecked()} onChange={(e)=> this.isChecked(e.target.value)}  />
+          <label>{m}</label></div></div></>)}
+        
       </>
     );
   }
 }
 function mapStateToProps(store) {
-console.log(store)
   return ({
     lists: store.lists
   })
