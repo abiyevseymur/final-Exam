@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addList } from './actions'
+import { setToggle } from './actions'
 
 
 class App extends Component {
@@ -8,45 +9,37 @@ class App extends Component {
     task: ""
   }
 
-  onTextChange=(e)=>{
-    this.setState({task:e.target.value})
-
+  onTextChange = (e) => {
+    this.setState({ task: e.target.value })
   }
-
-  isChecked=(toggle)=>{
-    if(toggle)
-    
-    return toggle
-  }
-  onSubmit=(e)=>{
+  onSubmit = (e) => {
     this.props.addList(this.state.task)
-    this.setState({task:e.target.value = ""})
-
+    this.setState({ task: e.target.value = "" })
   }
   render() {
-    return (
-      <> <div class="ui form success">
-        <div class="field">
-          <label>Task Manager Application</label>
-          <input  onChange={this.onTextChange} value={this.state.task}/>
-        </div>
-        <button class="ui submit button" onClick={this.onSubmit}>Add</button>
-      </div> 
 
-      
-          {this.props.lists.map(m=><>
-          <div className = "checkbox">
-            <div class="ui checked checkbox">
-          <input type="checkbox"  checked={this.isChecked()} onChange={(e)=> this.isChecked(e.target.value)}  />
-          <label>{m}</label></div></div></>)}
-        
-      </>
+    return (<>
+      <div className="ui form success">
+        <div className="field">
+          <label>Task Manager Application</label>
+          <input onChange={this.onTextChange} value={this.state.task} />
+        </div>
+        <button className="ui submit button" onClick={this.onSubmit}>Add</button>
+      </div>
+      {this.props.lists.map(m =>
+        <div className="checkbox" key={m.id}>
+          <div className="ui checked checkbox">
+            <input type="checkbox" checked={m.checked} onChange={() => this.props.setToggle(m.id)} />
+            <label style={m.checked ? { textDecoration: "line-through" } : {}}>{m.lists}</label></div></div>)}
+    </>
     );
   }
 }
 function mapStateToProps(store) {
+
+
   return ({
     lists: store.lists
   })
 }
-export default connect(mapStateToProps, { addList })(App);
+export default connect(mapStateToProps, { addList, setToggle })(App);

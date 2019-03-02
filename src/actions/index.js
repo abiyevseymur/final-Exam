@@ -1,4 +1,4 @@
-import { ADD_LIST } from "./constants";
+import { ADD_LIST, CHECKED } from "./constants";
 
 export const addList=(value)=>(
 
@@ -8,6 +8,9 @@ export const addList=(value)=>(
     }
 )
 
-export const setToggle=(value)=>{
-
-}
+export const setToggle=(id)=>(
+    {
+        type:CHECKED,
+        payload:id
+    }
+)

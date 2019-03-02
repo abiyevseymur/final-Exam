@@ -1,9 +1,7 @@
 import { combineReducers } from 'redux'
-import { listReducer } from './../reducers/addList';
-import {toggleReducer} from './../reducers/toggleReducer'
+import { listReducer } from './listReducer';
 
 
 export const rootReducer = combineReducers({
-    lists: listReducer,
-    toggle:toggleReducer
+    lists: listReducer
 })
